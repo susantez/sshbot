@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="sshBot">
+    <output-path>$PROJECT_DIR$/out/artifacts/sshBot</output-path>
+    <root id="archive" name="sshBot.jar">
+      <element id="module-output" name="sshbot" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: lib\log4j-api-2.9.1.jar lib\log4j-core-2.9.1.jar lib\jsch-
+ 0.1.54.jar
+Main-Class: com.accenture.mwops.App
+
