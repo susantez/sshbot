@@ -3,6 +3,7 @@ package com.accenture.mwops;
 import com.accenture.mwops.entity.RemoteMachine;
 import com.accenture.mwops.util.InputParser;
 import com.accenture.mwops.util.Validator;
+import com.jcraft.jsch.JSchException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,26 +19,31 @@ import java.util.List;
 public class App {
     private static final Logger logger = LogManager.getLogger(App.class);
 
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         try {
-            /*debug mode
+
+            /** DEBUG MODE
             if (args == null || args.length < 1) {
                 args = new String[2];
-                args[0] = "C:\\Users\\serkan.susantez\\Desktop\\remoteMachines.txt";
-                args[1] = "C:\\Users\\serkan.susantez\\Desktop\\scripts.txt";
+                args[0] = "C:\\sshBot\\remoteMachines.txt";
+                args[1] = "C:\\sshBot\\scripts.txt";
             }
-            */
+             **/
+
             if (Validator.validateInputs(args)) {
-                logger.info("host|script|resultCode|result");
                 List<RemoteMachine> remoteMachines = InputParser.parseRemoteMachines(args[0]);
                 List<String> scripts = InputParser.parseScripts(args[1]);
                 ShellExecutor executor = new ShellExecutor();
                 for (RemoteMachine remoteMachine : remoteMachines) {
                     executor.setRemoteMachine(remoteMachine);
-                    executor.executeFile(scripts);
+                    try {
+                        executor.runCommands(scripts);
+                    } catch (JSchException jsEx) {
+                        logger.error(remoteMachine.getHost() + "|" + jsEx.getMessage());
+                    }
                 }
             }
-        } catch (Exception t){
+        } catch (Exception t) {
             logger.error(t);
         }
     }

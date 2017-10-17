@@ -6,7 +6,19 @@ public class RemoteMachine {
     private String host;
     private int port;
 
-    public RemoteMachine() {    }
+    public String getRootUser() {
+        return rootUser;
+    }
+
+    public void setRootUser(String rootUser) {
+        this.rootUser = rootUser;
+    }
+
+    private String rootUser;
+
+    public RemoteMachine() {
+    }
+
     public RemoteMachine(String host, String port) {
         setHost(host);
         setPort(Integer.parseInt(port));
